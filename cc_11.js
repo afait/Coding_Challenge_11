@@ -76,7 +76,18 @@ class Library {
        }
     }; // Created a method to check if the book exists and is available, if not log "Out of Copies"
 
-    }
+    returnBook(borrowerId, isbn) {
+        const book = this.books.find(book => book.isbn === isbn);
+        const borrower = this.borrowers.find(borrower => borrower.borrowerId === borrowerId);
+            // Created returnbook method which finds books that the borrower has and the isbn number
+        if (book && borrower && book.copies > 0) {
+            book.updateCopies(1);
+            borrower.returnBook(book.title); // returns the titel of the book if there is a copy in the borrowers library
+        } else {
+            console.log("Out of Copies")
+        } // If the borrower has no books returns "Out of Copies"
+    };
+    };
 
     // Task 3 Logs
 const library = new Library(); // Created a new library
@@ -89,3 +100,9 @@ library.listBooks(); // Lists books in the library
 library.lendBook(201, 123456);
 console.log(book1.getDetails()); // Logs the details of book1
 console.log(borrower1.borrowedBooks); // Logs the name of the borrowed books
+
+// Task 5 Logs
+
+library.returnBook(201, 123456); // Creates library 201 
+console.log(book1.getDetails()); // Logs the details of book1
+console.log(borrower1.borrowedBooks); // Logs the borrowed books for borrower1
