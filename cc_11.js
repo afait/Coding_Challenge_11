@@ -34,7 +34,7 @@ class Borrower { // Create class borrower with properties name, borrowerId, and 
     borrowBook(bookTitle) {
         this.borrowedBooks.push(bookTitle)
     }; // Method adds a book title to the list of book titles
-    returnbook(book) {
+    returnBook(book) {
         this.borrowedBooks = this.borrowedBooks.filter(b => b !== book);
     }; // Method removes the returnedbook from the list of borrowedBooks
 };
@@ -43,7 +43,7 @@ const borrower1 = new Borrower("Alice Johnson", 201);
 borrower1.borrowBook("The Great Gatsby");
 console.log(borrower1.borrowedBooks);
 // Create borrower1 with name bookId and one borrowedbook
-borrower1.returnbook("The Great Gatsby");
+borrower1.returnBook("The Great Gatsby");
 console.log(borrower1.borrowedBooks);
 // Return the title of the book so it returns and empty array
 
@@ -62,8 +62,30 @@ class Library {
         this.books.forEach(book => console.log(book.getDetails()));
     }; // Created a method that logs all the books' details
     
+
+    // Task 4 - Implementing Book Borrowing
+    lendBook(borrowerId, isbn) {
+       const book = this.books.find(book => book.isbn === isbn);
+       const borrower = this.borrowers.find(borrower => borrower.borrowerId === borrowerId) ;
+        // Creates method lendbook with borrowerId and isbn
+       if (book && borrower && book.copies > 0) {
+        book.updateCopies(-1);
+        borrower.borrowBook(book.title);
+       } else {
+        console.log ("Out of copies")
+       }
+    }; // Created a method to check if the book exists and is available, if not log "Out of Copies"
+
     }
 
+    // Task 3 Logs
 const library = new Library(); // Created a new library
 library.addBook(book1); // Adds book 1 to the library
+library.borrowers.push(borrower1)
 library.listBooks(); // Lists books in the library
+
+// Task 4 Logs
+
+library.lendBook(201, 123456);
+console.log(book1.getDetails()); // Logs the details of book1
+console.log(borrower1.borrowedBooks); // Logs the name of the borrowed books
